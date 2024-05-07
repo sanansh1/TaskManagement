@@ -1,6 +1,8 @@
 package com.api.mvctaskmgmt.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,9 +22,10 @@ public class Task implements Serializable {
     @Id
     private Long id;
     private String name;
-    @Size(min=6, message = "Enter at least 6 characters")
+    @Size(min = 6, message = "Enter at least 6 characters")
     private String desc;
-    private Date targetDate;
+    private Date createDate;
+    private Date completionDate;
     private boolean isDone;
 
     @Override
@@ -39,7 +42,8 @@ public class Task implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", desc='" + desc + '\'' +
-                ", targetDate=" + targetDate +
+                ", targetDate=" + createDate +
+                ", completionDate=" + completionDate +
                 ", isDone=" + isDone +
                 '}';
     }

@@ -16,7 +16,7 @@
         </div>
         <div class="col-6">
             <h2>Edit Task Item</h2>
-            <form class="row g-3" action="#" th:action="@{/task/{id}(id=${task.id})}" th:object="${task}" method="PUT">
+            <form class="row g-3" action="#" th:action="@{/task/{id}(id=${task.id})}" th:object="${task}" method="POST">
                 <div class="form-group">
                     <div class="col-6">
                         <label for="description">Description</label>
@@ -38,7 +38,7 @@
                         </label>
                     </div>
 
-                    <input type="hidden" th:field="*{targetDate}" />
+                    <input type="hidden" th:field="*{createDate}" />
 
                     <button type="submit" class="btn btn-outline-success">
                         <i class="bi bi-plus-square-fill"></i> Update

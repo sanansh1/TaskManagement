@@ -15,7 +15,7 @@
             </p>
         </div>
         <div class="col-6">
-            <h2>Add a new Task Item to be done</h2>
+            <h2>Add a new Task Item</h2>
             <form action="#" th:action="@{/add-task}" th:object="${task}" method="POST">
                 <div class="form-group">
                     <input class="form-control"
@@ -23,11 +23,10 @@
                            th:field="*{desc}" th:attr="value=${task.desc}"
                            placeholder="Description"
                     >
-
+                    <br/>
                     <button type="submit" class="btn btn-outline-success">
                         <i class="bi bi-plus-square-fill"></i> Add task
                     </button>
-
                 </div>
             </form>
         </div>

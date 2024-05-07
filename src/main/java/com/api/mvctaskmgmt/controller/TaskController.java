@@ -4,15 +4,18 @@ import com.api.mvctaskmgmt.model.Task;
 import com.api.mvctaskmgmt.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -22,6 +25,13 @@ import java.util.Date;
 public class TaskController {
     @Autowired
     private TaskService service;
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(
+                dateFormat, false));
+    }
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public ModelAndView welcome(ModelMap model) {
@@ -40,7 +50,7 @@ public class TaskController {
     public String addTask(ModelMap model, @Valid Task task, BindingResult result) {
         if (result.hasErrors())
             return "addtask";
-        Task item = new Task(task.getId(),getLoggedInUserName(model), task.getDesc(), new Date(), false);
+        Task item = new Task(task.getId(),getLoggedInUserName(model), task.getDesc(), new Date(), null, false);
         service.save(item);
         model.clear();// to prevent request parameter "name" to be passed
         return "redirect:/";
@@ -54,12 +64,15 @@ public class TaskController {
         return "edittask";
     }
 
-    @PutMapping("/task/{id}")
+    @PostMapping("/task/{id}")
     public String updateTodoItem(@PathVariable("id") Long id, @Valid Task todoItem, BindingResult result, Model model) {
         Task item = service
                 .findById(id);
         item.setDone(todoItem.isDone());
         item.setDesc(todoItem.getDesc());
+        if(todoItem.isDone()){
+            item.setCompletionDate(new Date());
+        }
         service.save(item);
         return "redirect:/";
     }
