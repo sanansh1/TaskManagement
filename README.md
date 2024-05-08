@@ -5,3 +5,5 @@ Built with JDK 17 and powered by Spring Framework 6, this application integrates
 It employs an H2 in-memory database for efficient data management. 
 Utilizing Spring MVC 6.1.3 and Thymeleaf 3.1.2.RELEASE, it offers a seamless user interface, facilitating intuitive task management functionalities. 
 This project represents a modern, feature-rich solution for effectively managing tasks within a dynamic web environment.
+[Task Management presentation.pdf](https://github.com/sanansh1/TaskManagement/files/15253378/Untitled.presentation.pdf)
+
